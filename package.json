@@ -1,9 +1,10 @@
 {
   "name": "onbvn-backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "The backend for the Indian Social Media App OnBVN",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
