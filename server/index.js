@@ -1,8 +1,8 @@
 import express from 'express';
 import dbConfig from './config/db';
 import middlewaresConfig from './config/middlewares';
-import {OnbvnRoutes} from './modules';
-import cors from 'cors';
+import { UserRoutes } from './modules';
+
 const app = express();
  
 /** Database **/ 
@@ -11,7 +11,7 @@ dbConfig();
 /** Middlewares **/
 middlewaresConfig(app);
 
-app.use('/api', [OnbvnRoutes]);
+app.use('/api', [UserRoutes]);
 
 const PORT = process.env.PORT || 3000;
 
@@ -21,6 +21,6 @@ app.listen(PORT, err => {
     if(err) {
         console.error(err);
     } {
-        console.log('App listning to port : 3000');
+        console.log('App listening to port : 3000');
     }
 });

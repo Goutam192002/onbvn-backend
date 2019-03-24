@@ -1,33 +1,45 @@
-//now we imported the model we created for schema ---
-//       ___________________________________________|
-//       |
-//       v
+import User from './model';
 
-import Users from './model';
-
-export const createOnbvnReg = async (req, res) => {
-    const {full_name,user_name,mobile_number,e_mail,pass_word} = req.body;
-    const newOnbvnReg = new Users({full_name,user_name,mobile_number,e_mail,pass_word});
+export const create = async (req, res) => {
+    const {
+        name,
+        username,
+        mobile_number,
+        email,
+        password
+    } = req.body;
+    const User = new User({ name, username, mobile_number, email, password });
 
     try{
-         return res.status(201).json({user: await newOnbvnReg.save()});
+        return res.status(201).json(await User.save());
     } catch(error) {
-        return res.status(error.status).json({error: true, message: 'Error with onbvn'});
+        return res.status(error.status).json({
+            error: true,
+            message: 'Something went wrong..Please try again later'
+        });
     }
 };
 
-export const getAllUsers = async (req, res) => {
+export const getAll = async (req, res) => {
     try {
-         return res.status(200).json({users: await Users.find({})});
+        return res.status(200).json( await User.find({}));
     } catch (error) {
-        return res.status(error.status).json({error: true, messages: 'Error with onbvn'});
+        return res.status(error.status).json({
+            error: true,
+            message: 'Something went wrong..Please try again later'
+        });
     }
 };
 
-export const findUsername = async (req, res) => {
+export const findUser = async (req, res) => {
     try {
-        return res.status(200).json({user: await Users.findOne({user_name: req.params.user_name}).select('user_name pass_word')})
+        return res.status(200).json(await User.findOne({
+            username: req.params.username
+        }).select('username name mobile_number email'))
     } catch (error) {
-        return res.status(error.status).json({error: true, messages: 'Error with onbvn'});
+        return res.status(error.status).json({
+            error: true,
+            message: 'Something went wrong...Please try again later'
+        });
     }
 };

@@ -1,11 +1,14 @@
 import {Router} from 'express';
-import * as OnbvnController from './controller';
+import * as UserController from './controller';
 
-const routes = new Router();
+const router = new Router();
 
-routes.post('/createusers', OnbvnController.createOnbvnReg);
-routes.get('/getallusers', OnbvnController.getAllUsers);
-routes.get('/findusername/:user_name', OnbvnController.findUsername);
+// create a user
+router.post('/users/', UserController.create);
+// get all users
+router.get('/users/', UserController.getAll);
+// get user by username
+router.get('/users/:username', UserController.findUser);
 
 
-export default routes;
+export default router;

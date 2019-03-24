@@ -1,3 +1,3 @@
-import OnbvnRoutes from './routes';
+import UserRoutes from './routes';
 
-export {OnbvnRoutes};
+export {UserRoutes};
