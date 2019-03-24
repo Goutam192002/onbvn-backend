@@ -1,6 +1,6 @@
 import User from './model';
 
-export const create = async (req, res) => {
+const create = async (req, res) => {
     const {
         name,
         username,
@@ -20,7 +20,7 @@ export const create = async (req, res) => {
     }
 };
 
-export const getAll = async (req, res) => {
+const getAll = async (req, res) => {
     try {
         return res.status(200).json( await User.find({}));
     } catch (error) {
@@ -31,7 +31,7 @@ export const getAll = async (req, res) => {
     }
 };
 
-export const findUser = async (req, res) => {
+const findUser = async (req, res) => {
     try {
         return res.status(200).json(await User.findOne({
             username: req.params.username
@@ -43,3 +43,40 @@ export const findUser = async (req, res) => {
         });
     }
 };
+
+const updateUser = async (req, res) => {
+    let username = req.params.username;
+    let user = req.body;
+    try {
+        res.status(200).json(await User.findOneAndUpdate({
+            username: username
+        }, user).select('username name mobile_number email'))
+    } catch (error) {
+        res.status(error.status).json({
+            error: true,
+            message: 'Something went wrong...Please try again'
+        })
+    }
+};
+
+const deleteUser = async (req, res) => {
+    let username = req.params.username;
+    try {
+        res.status(200).json(await User.findOneAndDelete({
+            username: username
+        }))
+    } catch (error) {
+        res.status(error.status(200).json({
+            error: true,
+            message: 'Something went wrong...Please try again later'
+        }))
+    }
+};
+
+export {
+    create,
+    getAll,
+    findUser,
+    updateUser,
+    deleteUser
+}
