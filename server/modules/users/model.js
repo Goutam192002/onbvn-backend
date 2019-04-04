@@ -13,7 +13,7 @@ const UserSchema = new Schema({
     required: true,
     unique: true
   },
-  mobile_number: {
+  mobileNumber: {
     type: String,
     required: true
   },
@@ -24,6 +24,15 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true
+  },
+  profilePicture: {
+    type: String,
+    required: true
+  },
+  aadharUID: {
+    type: String,
+    required: true,
+    unique: true
   }
 });
 

@@ -4,14 +4,14 @@ import middlewaresConfig from './config/middlewares';
 import { UserRoutes } from './modules';
 
 const app = express();
- 
-/** Database **/ 
+
+/** Database **/
 dbConfig();
 
 /** Middlewares **/
 middlewaresConfig(app);
 
-app.use('/api', [UserRoutes]);
+app.use('/api/v1/', [UserRoutes]);
 
 const PORT = process.env.PORT || 3000;
 

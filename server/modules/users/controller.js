@@ -4,13 +4,15 @@ const create = async (req, res) => {
     const {
         name,
         username,
-        mobile_number,
+        mobileNumber,
         email,
-        password
+        password,
+        profilePicture,
+        aadharUID
     } = req.body;
-    const User = new User({ name, username, mobile_number, email, password });
+    const User = new User({ name, username, mobileNumber, email, password, profilePicture, aadharUID });
 
-    try{
+    try {
         return res.status(201).json(await User.save());
     } catch(error) {
         return res.status(error.status).json({
