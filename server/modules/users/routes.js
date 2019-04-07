@@ -1,5 +1,6 @@
 import {Router} from 'express';
 import * as UserController from './controller';
+import * as AuthController from './auth';
 
 const router = new Router();
 
@@ -13,6 +14,7 @@ router.get('/users/:username', UserController.findUser);
 router.put('/users/:username', UserController.updateUser);
 // delete user
 router.delete('/users/:username', UserController.deleteUser);
-
+// authorize user (LOGIN)
+router.post('/users/login', AuthController.authenticate);
 
 export default router;

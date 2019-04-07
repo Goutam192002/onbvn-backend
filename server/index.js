@@ -15,7 +15,7 @@ app.use('/api/v1/', [UserRoutes]);
 
 const PORT = process.env.PORT || 3000;
 
-app.get('/', (req, res) => res.send('Hello World!'));
+app.get('/', (req, res) => res.json('Hello World!'));
 
 app.listen(PORT, err => {
     if(err) {
@@ -24,3 +24,5 @@ app.listen(PORT, err => {
         console.log('App listening to port : 3000');
     }
 });
+
+export default app;

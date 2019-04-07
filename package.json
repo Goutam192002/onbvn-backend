@@ -4,8 +4,9 @@
   "description": "The backend for the Indian Social Media App OnBVN",
   "main": "index.js",
   "scripts": {
+    "start": "node index",
     "dev": "nodemon index",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nyc mocha server/tests/ --require babel-register --exit"
   },
   "author": "Goutam B Seervi & Shubham",
   "license": "ISC",
@@ -24,6 +25,10 @@
   },
   "devDependencies": {
     "@babel/preset-env": "^7.3.1",
-    "@babel/preset-stage-0": "^7.0.0"
+    "@babel/preset-stage-0": "^7.0.0",
+    "chai": "^4.2.0",
+    "mocha": "^6.0.2",
+    "nyc": "^13.3.0",
+    "supertest": "^4.0.2"
   }
 }
