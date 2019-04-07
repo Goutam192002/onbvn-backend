@@ -1,5 +1,6 @@
 import User from './model';
 import * as bcrypt from "bcrypt";
+import * as util from "util";
 bcrypt.hashAsync = util.promisify(bcrypt.hash);
 
 const create = async (req, res) => {
