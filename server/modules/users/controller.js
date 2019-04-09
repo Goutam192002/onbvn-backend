@@ -1,7 +1,4 @@
 import User from './model';
-import * as bcrypt from "bcrypt";
-import * as util from "util";
-bcrypt.hashAsync = util.promisify(bcrypt.hash);
 
 const create = async (req, res) => {
     let {
@@ -14,10 +11,25 @@ const create = async (req, res) => {
         aadharUID
     } = req.body;
     try {
-        password = await bcrypt.hashAsync(password, 8);
-        const User = new User({ name, username, mobileNumber, email, password, profilePicture, aadharUID });
-        return res.status(201).json(await User.save());
+        const user = new User({
+            name: name,
+            username: username,
+            mobileNumber: mobileNumber,
+            email: email,
+            password: password,
+            profilePicture: profilePicture,
+            aadharUID: aadharUID
+        });
+        await user.save();
+        return res.status(201).json({
+            name: user.name,
+            username: user.username,
+            mobileNumber: user.mobileNumber,
+            email: user.email,
+            profilePicture: user.profilePicture
+        });
     } catch (error) {
+        console.log(error);
         return res.status(500).json({ message: 'Could not create user...Please try again later'})
     }
 };
@@ -52,7 +64,7 @@ const updateUser = async (req, res) => {
     try {
         res.status(200).json(await User.findOneAndUpdate({
             username: username
-        }, user).select('username name mobile_number email'))
+        }, user, { new: true }).select('username name mobileNumber email profilePicture'))
     } catch (error) {
         res.status(error.status).json({
             error: true,

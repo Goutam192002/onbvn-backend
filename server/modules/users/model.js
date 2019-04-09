@@ -1,9 +1,10 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, {Schema} from 'mongoose';
+import * as bcrypt from "bcrypt";
 
 /**
  * @swagger
  * definition:
- *    users:
+ *    user:
  *        properties:
  *          name:
  *            type: string
@@ -14,6 +15,10 @@ import mongoose, { Schema } from 'mongoose';
  *          mobileNumber:
  *            type: string
  *          profilePicture:
+ *            type: string
+ *          password:
+ *            type: string
+ *          aadharUID:
  *            type: string
  */
 const UserSchema = new Schema({
@@ -39,8 +44,7 @@ const UserSchema = new Schema({
     required: true
   },
   profilePicture: {
-    type: String,
-    required: true
+    type: String
   },
   aadharUID: {
     type: String,
@@ -49,6 +53,22 @@ const UserSchema = new Schema({
   }
 });
 
-// after creating schema,we need to create model for that particular schema and name that model anything that you want.
+UserSchema.pre("save", async function (next) {
+  if(!this.isModified('password')) return next();
+  try {
+    this.password = await bcrypt.hash(this.password, 8)
+  } catch (err) {
+    return next(err);
+  }
+});
 
-export default mongoose.model('Users', UserSchema);
+UserSchema.pre("findOneAndUpdate", async function (next) {
+  if(this.getUpdate().password === undefined) return next();
+  try {
+    this.getUpdate().password = await bcrypt.hash(this.getUpdate().password, 8)
+  } catch (err) {
+    return next(err);
+  }
+});
+
+export default mongoose.model('User', UserSchema);
