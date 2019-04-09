@@ -4,7 +4,21 @@ import * as AuthController from './auth';
 
 const router = new Router();
 
-// create a user
+/**
+ * @swagger
+ *
+ * /api/v1/users:
+ *   post:
+ *     description: Create a new user
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *     responses:
+ *       200:
+ *         description: returns the newly created user
+ *       500:
+ *         description: User has not been created...Internal server error occurred
+ */
 router.post('/users/', UserController.create);
 // get all users
 router.get('/users/', UserController.getAll);

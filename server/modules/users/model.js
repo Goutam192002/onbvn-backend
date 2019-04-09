@@ -1,8 +1,21 @@
 import mongoose, { Schema } from 'mongoose';
 
-//as the mongodb takes data in json format, we need to create a mongodb schema
-//to do so we use mongoose.js framework for mongodb to create schema(structure) in which mongo will take data in.
-
+/**
+ * @swagger
+ * definition:
+ *    users:
+ *        properties:
+ *          name:
+ *            type: string
+ *          username:
+ *            type: string
+ *          email:
+ *            type: string
+ *          mobileNumber:
+ *            type: string
+ *          profilePicture:
+ *            type: string
+ */
 const UserSchema = new Schema({
   name: {
        type: String,
