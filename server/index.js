@@ -33,6 +33,7 @@ dbConfig();
 middlewaresConfig(app);
 
 app.use('/api/v1/', [UserRoutes]);
+
 app.get('/api/documentation/', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.send(swaggerSpec);

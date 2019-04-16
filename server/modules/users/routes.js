@@ -143,8 +143,7 @@ router.put('/users/:username', UserController.updateUser);
  *    summary: DELETE a user
  *    tags:
  *      - User Routes
- *    description: This route is for deleting a user. This route is not really important as we
- *    aren't sure if this feature of allowing users to delete their accounts should be their or not.
+ *    description: This route is for deleting a user. This route is not really important as we aren't sure if this feature of allowing users to delete their accounts should be their or not.
  *    parameters:
  *      - in: path
  *        name: username
