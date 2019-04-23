@@ -38,11 +38,11 @@ const router = new Router();
  *         description: The profile picture of the user ( will be a URL)
  *         required: true
  *         in: formData
- *       - name: AadharUID
+ *       - name: aadharUID
  *         description: The Aadhar ID of the user
  *         required: true
  *         in: formData
- *       - name: Password
+ *       - name: password
  *         description: Password of the user which will be used to login
  *         required: true
  *         in: formData
