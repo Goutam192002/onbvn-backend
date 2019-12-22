@@ -1,28 +1,42 @@
 import User from './model';
 
 const create = async (req, res) => {
-    const {
+    let {
         name,
         username,
-        mobile_number,
+        mobileNumber,
         email,
-        password
+        password,
+        profilePicture,
+        aadharUID
     } = req.body;
-    const User = new User({ name, username, mobile_number, email, password });
-
-    try{
-        return res.status(201).json(await User.save());
-    } catch(error) {
-        return res.status(error.status).json({
-            error: true,
-            message: 'Something went wrong..Please try again later'
+    try {
+        const user = new User({
+            name: name,
+            username: username,
+            mobileNumber: mobileNumber,
+            email: email,
+            password: password,
+            profilePicture: profilePicture,
+            aadharUID: aadharUID
         });
+        await user.save();
+        return res.status(201).json({
+            name: user.name,
+            username: user.username,
+            mobileNumber: user.mobileNumber,
+            email: user.email,
+            profilePicture: user.profilePicture
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: 'Could not create user...Please try again later'})
     }
 };
 
 const getAll = async (req, res) => {
     try {
-        return res.status(200).json( await User.find({}));
+        return res.status(200).json( await User.find({}).select('name username mobileNumber email profilePicture'));
     } catch (error) {
         return res.status(error.status).json({
             error: true,
@@ -35,7 +49,7 @@ const findUser = async (req, res) => {
     try {
         return res.status(200).json(await User.findOne({
             username: req.params.username
-        }).select('username name mobile_number email'))
+        }).select('username name mobileNumber email profilePicture'))
     } catch (error) {
         return res.status(error.status).json({
             error: true,
@@ -50,7 +64,7 @@ const updateUser = async (req, res) => {
     try {
         res.status(200).json(await User.findOneAndUpdate({
             username: username
-        }, user).select('username name mobile_number email'))
+        }, user, { new: true }).select('username name mobileNumber email profilePicture'))
     } catch (error) {
         res.status(error.status).json({
             error: true,

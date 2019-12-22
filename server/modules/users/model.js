@@ -1,8 +1,26 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, {Schema} from 'mongoose';
+import * as bcrypt from "bcrypt";
 
-//as the mongodb takes data in json format, we need to create a mongodb schema
-//to do so we use mongoose.js framework for mongodb to create schema(structure) in which mongo will take data in.
-
+/**
+ * @swagger
+ * definition:
+ *    user:
+ *        properties:
+ *          name:
+ *            type: string
+ *          username:
+ *            type: string
+ *          email:
+ *            type: string
+ *          mobileNumber:
+ *            type: string
+ *          profilePicture:
+ *            type: string
+ *          password:
+ *            type: string
+ *          aadharUID:
+ *            type: string
+ */
 const UserSchema = new Schema({
   name: {
        type: String,
@@ -13,7 +31,7 @@ const UserSchema = new Schema({
     required: true,
     unique: true
   },
-  mobile_number: {
+  mobileNumber: {
     type: String,
     required: true
   },
@@ -24,9 +42,33 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true
+  },
+  profilePicture: {
+    type: String
+  },
+  aadharUID: {
+    type: String,
+    required: true,
+    unique: true
   }
 });
 
-// after creating schema,we need to create model for that particular schema and name that model anything that you want.
+UserSchema.pre("save", async function (next) {
+  if(!this.isModified('password')) return next();
+  try {
+    this.password = await bcrypt.hash(this.password, 8)
+  } catch (err) {
+    return next(err);
+  }
+});
 
-export default mongoose.model('Users', UserSchema);
+UserSchema.pre("findOneAndUpdate", async function (next) {
+  if(this.getUpdate().password === undefined) return next();
+  try {
+    this.getUpdate().password = await bcrypt.hash(this.getUpdate().password, 8)
+  } catch (err) {
+    return next(err);
+  }
+});
+
+export default mongoose.model('User', UserSchema);
